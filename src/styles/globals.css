@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Optional: Add any custom global styles below */
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -18,4 +20,9 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+div.fixed.top-0.left-0.right-0.z-50 {
+  pointer-events: auto !important;
+  z-index: -1 !important;
 }

@@ -1,0 +1,77 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 920px;
+  border: 1px solid #ccc;
+}
+
+/* 曜日ヘッダー */
+.days-header {
+  display: grid;
+  grid-template-columns: 60px repeat(5, 1fr); /* 🔹 1列目は時間カラム、残りは各曜日 */
+  background-color: #f8f9fa;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.empty-header {
+  width: 60px; /* 🔹 左上の空白エリア (時間カラムの分) */
+}
+
+.day-header {
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+/* カレンダー全体 */
+.calendar-body {
+  display: flex;
+  padding-top: 10px;
+}
+
+/* 時間カラム */
+.time-column {
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #ddd;
+  font-size: 12px;
+}
+
+.time-slot {
+  height: 60px; /* 1時間ごとに1スロット */
+  display: flex;
+  justify-content: center;
+}
+
+/* 曜日ごとのカラム */
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  position: relative;
+}
+
+/* 各曜日のカラム */
+.day-column {
+  position: relative;
+  border-left: 1px solid #ddd;
+  height: 840px; /* 8:00 - 21:00 */
+}
+
+/* 講義の表示 */
+.event {
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  background-color: rgba(100, 149, 237, 0.8);
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  text-align: left;
+  transition: all 0.3s ease-in-out;
+}
