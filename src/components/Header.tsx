@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { useFilteredState } from '../stores/useFilterStore';
-
 interface HeaderProps {
   toggleSidebar: () => void;
 }

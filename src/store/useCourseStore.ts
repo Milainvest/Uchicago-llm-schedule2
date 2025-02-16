@@ -66,6 +66,7 @@ export const useCourseStore = create<CourseState>(
 
       hasScheduleConflict: (course) => {
         // Implement your logic here
+        console.log("course", course);
         return false; // Placeholder
       },
     }),

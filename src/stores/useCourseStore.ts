@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { Course } from '../types/course';
 
 interface CourseState {
@@ -21,7 +20,7 @@ export const useCourseStore = create<CourseState>(
 
       addCourse: (course) => {
         // Check if already selected
-        if (get().isCourseSelected(course.id)) {
+        if (get().isCourseSelected(course.id.toString())) {
           console.log("Course already selected");
           return;
         }
@@ -51,7 +50,7 @@ export const useCourseStore = create<CourseState>(
 
       removeCourse: (courseId) => {
         set((state) => {
-          const newSelectedCourses = state.selectedCourses.filter(c => c.id !== courseId);
+          const newSelectedCourses = state.selectedCourses.filter(c => c.id.toString() !== courseId);
           const newTotalCredits = newSelectedCourses.reduce((sum, c) => sum + c.credits, 0);
 
           return {
@@ -62,10 +61,11 @@ export const useCourseStore = create<CourseState>(
       },
 
       isCourseSelected: (courseId) => 
-        get().selectedCourses.some(course => course.id === courseId),
+        get().selectedCourses.some(course => course.id.toString() === courseId),
 
       hasScheduleConflict: (course) => {
         // Implement your logic here
+        console.log("course", course);
         return false; // Placeholder
       },
     }),

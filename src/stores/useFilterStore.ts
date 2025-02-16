@@ -39,17 +39,6 @@ interface FilterState {
   fetchCourses: () => Promise<void>;
 }
 
-type FilterActions = {
-  setSearchQuery: FilterState['setSearchQuery'];
-  setCategory: FilterState['setCategory'];
-  setProfessor: FilterState['setProfessor'];
-  toggleDay: FilterState['toggleDay'];
-  setDays: FilterState['setDays'];
-  setCredits: FilterState['setCredits'];
-  setEvaluationMethod: FilterState['setEvaluationMethod'];
-  resetFilters: FilterState['resetFilters'];
-};
-
 const initialState: Omit<FilterState, 'hasActiveFilters' | 'setSearchQuery' | 'setCategory' | 'setProfessor' | 'toggleDay' | 'setDays' | 'setCredits' | 'setEvaluationMethod' | 'resetFilters' | 'resetSingleFilter' | 'fetchCourses'> = {
   searchQuery: '',
   category: null,
@@ -112,6 +101,7 @@ export const useFilterStore = create<FilterState>((set, get) => ({
 
   resetFilters: () => {
     const state = get();
+    console.log("state", state);
     set(initialState);
   },
 

@@ -1,33 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useCourseStore } from '../stores/useCourseStore';
 import { Weekday, EvaluationMethod } from '../stores/useFilterStore';
-
-interface Course {
-  id: number;
-  name: string;
-  description: string;
-  credits: number;
-  professor: string;
-  days: Weekday[];
-  category: string;
-  evaluationMethod: EvaluationMethod;
-  timeStart: string;
-  timeEnd: string;
-}
+import { Course } from '../types/course';
 
 import coursesData from '../../public/courses.json';
 
 const allCourses: Course[] = coursesData.map(course => ({
   id: course.id,
   name: course.name,
-  description: course.description || '',
   credits: course.credits,
   professor: course.professor.join(', '),
   days: course.days.map((day: string) => day as Weekday),
-  category: course.category,
-  evaluationMethod: course.evaluationMethod,
   timeStart: course.timeStart,
   timeEnd: course.timeEnd,
+  category: course.category,
+  evaluationMethod: course.evaluationMethod as EvaluationMethod,
+  description: course.description || '',
+  isRequired: course.isRequired === 'Y' ? true : false,
 }));
 
 const isTimeOverlap = (start1: string, end1: string, start2: string, end2: string) => {
@@ -75,7 +64,7 @@ const isConflicting = (course: Course) => {
     );
 
             // 1. 曜日とカテゴリーが一致するコース
-            let topPriorityCourses = candidateCourses.filter(course =>
+            const topPriorityCourses = candidateCourses.filter(course =>
               !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致
               selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致
@@ -83,14 +72,14 @@ const isConflicting = (course: Course) => {
           );
   
           // 2. 曜日のみ一致するコース
-          let dayMatchCourses = candidateCourses.filter(course =>
+          const dayMatchCourses = candidateCourses.filter(course =>
               !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致
               !selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致 
               !isConflicting(course) // 選択されているコースと重複しない
           );
           // 3. カテゴリーのみ一致するコース
-          let categoryMatchCourses = candidateCourses.filter(course =>
+          const categoryMatchCourses = candidateCourses.filter(course =>
               !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               !course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致しない
               selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致 

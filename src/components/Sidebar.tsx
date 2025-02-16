@@ -6,13 +6,11 @@ interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
   className?: string;
-  categories: string[];
-  professors: string[];
 }
 
 type Credits = 1 | 2 | 3 | 4 | null; // Example, adjust based on your actual type definition
 
-const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className, categories, professors = [] }) => {
+const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className }) => {
   const [isVisible, setIsVisible] = useState(false);
   
   // Ensure this hook is called at the top level
@@ -38,9 +36,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className, categories, pro
   useEffect(() => {
     fetchCourses();
   }, [fetchCourses]);
-
-  // const [localCategories, setLocalCategories] = useState<string[]>([]);
-  const [localCategories, setLocalCategories] = useState<Course[]>([]);
+  
   const uniqueCategories = Array.from(new Set(courses.map(course => course.category)));
   const uniqueProfessors = Array.from(new Set(courses.map(course => course.professor)));
   
