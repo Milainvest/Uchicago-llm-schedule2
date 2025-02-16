@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useFilterStore } from '../stores/useFilterStore';
+import { useFilterStore, EvaluationMethod, Weekday } from '../stores/useFilterStore';
 import { useCourseStore } from '../stores/useCourseStore';
 import { Course } from '../types/course';
 import CourseCard from './CourseCard';
@@ -8,21 +8,22 @@ import coursesData from '../../public/courses.json';
 const allCourses: Course[] = coursesData.map(course => ({
   id: course.id,
   name: course.name,
-  professor: course.professor.join(', '),
   credits: course.credits,
-  days: course.days,
-  category: course.category,
+  professor: course.professor.join(', '),
+  days: course.days.map((day: string) => day as Weekday),
   timeStart: course.timeStart,
   timeEnd: course.timeEnd,
-  evaluationMethod: course.evaluationMethod,
+  category: course.category,
+  evaluationMethod: course.evaluationMethod as EvaluationMethod,
   description: course.description || '',
+  isRequired: course.isRequired,
 }));
 
 const CourseList: FC = () => {
   const { totalCredits, selectedCourses } = useCourseStore();
   const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState<Course[]>([]); // Initialize with an empty array
-  const [displayedCourses, setDisplayedCourses] = useState<Course[]>(allCourses);
+  const [displayedCourses] = useState<Course[]>(allCourses);
 
   const {
     searchQuery,

@@ -11,7 +11,7 @@ interface SidebarProps {
 
 type Credits = 1 | 2 | 3 | 4 | null; // Example, adjust based on your actual type definition
 
-const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, categories, professors = [] }) => {
+const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, professors = [] }) => {
   const [isVisible, setIsVisible] = useState(false);
   
   // Ensure this hook is called at the top level
@@ -22,7 +22,6 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, categories, professors = [
     selectedDays,
     credits,
     evaluationMethod,
-    courses,
     setSearchQuery,
     setCategory,
     setProfessor,
@@ -39,7 +38,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, categories, professors = [
   }, [fetchCourses]);
 
   // const [localCategories, setLocalCategories] = useState<string[]>([]);
-  const [localCategories, setLocalCategories] = useState<Course[]>([]);
+  const [localCategories] = useState<Course[]>([]);
 
   // Update visibility based on isOpen
   useEffect(() => {
@@ -52,26 +51,6 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, categories, professors = [
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
-
-  // useEffect(() => {
-  //   // Fetch categories from an API or define them statically
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const response = await fetch('./courses.json'); // Fetching from public folder
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data = await response.json();
-  //       setLocalCategories(data); // Assuming data is an array of categories
-  //       setCategory(data[0] || null); // Set the first category as default if available
-  //     } catch (error) {
-  //       console.error('Failed to fetch categories:', error);
-  //       setLocalCategories([]); // Ensure localCategories is an array even on error
-  //     }
-  //   };
-
-  //   fetchCategories();
-  // }, []);
 
   const weekdays: Weekday[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const creditOptions: Credits[] = [1, 2, 3, 4];

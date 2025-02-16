@@ -1,25 +1,9 @@
 import React from 'react';
 import { useCourseStore } from '../stores/useCourseStore';
-import { Weekday } from '../stores/useFilterStore';
-import coursesData from '../../public/courses.json';
 import Calendar from './Calendar';
 
-const allCourses: Course[] = coursesData.map(course => ({
-  id: course.id,
-  name: course.name,
-  professor: course.professor.join(', '),
-  credits: course.credits,
-  days: course.days,
-  category: course.category,
-  timeStart: course.timeStart,
-  timeEnd: course.timeEnd,
-  evaluationMethod: course.evaluationMethod,
-  description: course.description || '',
-}));
-
 const SelectedCourses: React.FC = () => {
-  const { selectedCourses, totalCredits, removeCourse } = useCourseStore();
-  const Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const { selectedCourses, totalCredits } = useCourseStore();
 
       // 時間スロット（30分単位）
       const timeSlots = [];
@@ -27,13 +11,6 @@ const SelectedCourses: React.FC = () => {
           timeSlots.push(`${hour}:00`);
           timeSlots.push(`${hour}:30`);
       }
-  
-      // 時間をセルのインデックスに変換
-      const timeToIndex = (time: string, program: string) => {
-          const [hour, minute] = time.split(":").map(Number);
-          console.log(program, "hour: ", hour, "minute: ", minute);
-          return (hour - 8) * 2 + (minute >= 30 ? (minute === 30 ? 1 : 2) : 0);
-      };
 
   return (
     <div className="p-6 bg-white shadow-lg rounded-lg p-6 mb-4">

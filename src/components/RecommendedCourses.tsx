@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCourseStore } from '../stores/useCourseStore';
+import { Weekday, EvaluationMethod } from '../stores/useFilterStore';
 
 interface Course {
   id: number;
@@ -7,9 +8,9 @@ interface Course {
   description: string;
   credits: number;
   professor: string;
-  days: string[];
+  days: Weekday[];
   category: string;
-  evaluationMethod: string;
+  evaluationMethod: EvaluationMethod;
   timeStart: string;
   timeEnd: string;
 }
@@ -22,7 +23,7 @@ const allCourses: Course[] = coursesData.map(course => ({
   description: course.description || '',
   credits: course.credits,
   professor: course.professor.join(', '),
-  days: course.days,
+  days: course.days.map((day: string) => day as Weekday),
   category: course.category,
   evaluationMethod: course.evaluationMethod,
   timeStart: course.timeStart,
@@ -30,7 +31,6 @@ const allCourses: Course[] = coursesData.map(course => ({
 }));
 
 const isTimeOverlap = (start1: string, end1: string, start2: string, end2: string) => {
-  console.log("start1: ", start1, "end1: ", end1, "start2: ", start2, "end2: ", end2);
   return !(end1 <= start2 || end2 <= start1);
 };
 
@@ -42,16 +42,14 @@ const RecommendedCourses: React.FC = () => {
 // 選択されているコースと重複しないかどうかを確認
 const isConflicting = (course: Course) => {
   return selectedCourses.some((selected: any) => 
-    !selectedCourses.includes(course) && // 選択されていないコース
-     (selected.days || []).some((day: string) => (course.days || []).includes(day)) && // 選択されているコースの曜日と一致  
+    !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
+     (selected.days || []).some((day: string) => (course.days || []).some((d: Weekday) => d === day)) && // 選択されているコースの曜日と一致  
      ((course.timeStart < selected.timeEnd && course.timeEnd > selected.timeStart) || // 選択されているコースの時間と重複
       (selected.timeStart < course.timeEnd && selected.timeEnd > course.timeStart)) // 選択されているコースの時間と重複
   );
 };
 
   useEffect(() => {
-    // const selectedDays = selectedCourses.flatMap((course: any) => course.days || []);
-    // const selectedCategories = selectedCourses.map((course: any) => course.category || '');
     const selectedDays = new Set();
     const selectedCategories = new Set();
     const selectedTimes = selectedCourses.map(selectedcourse => {
@@ -78,47 +76,28 @@ const isConflicting = (course: Course) => {
 
             // 1. 曜日とカテゴリーが一致するコース
             let topPriorityCourses = candidateCourses.filter(course =>
-              !selectedCourses.includes(course) && // 選択されていないコース
+              !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致
               selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致
               !isConflicting(course) // 選択されているコースと重複しない
           );
-          console.log("topPriorityCourses", topPriorityCourses);
   
           // 2. 曜日のみ一致するコース
           let dayMatchCourses = candidateCourses.filter(course =>
-              !selectedCourses.includes(course) && // 選択されていないコース
+              !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致
               !selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致 
               !isConflicting(course) // 選択されているコースと重複しない
           );
-          console.log("dayMatchCourses", dayMatchCourses);
           // 3. カテゴリーのみ一致するコース
           let categoryMatchCourses = candidateCourses.filter(course =>
-              !selectedCourses.includes(course) && // 選択されていないコース
+              !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               !course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致しない
               selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致 
               !isConflicting(course) // 選択されているコースと重複しない
           );
-          console.log("categoryMatchCourses", categoryMatchCourses);
-  
           // 上位候補から順にリストを作成
           let sortedRecommendedCourses = [...topPriorityCourses, ...categoryMatchCourses, ...dayMatchCourses];
-          console.log("sortedRecommendedCourses", sortedRecommendedCourses);
-
-    // const priorityCourses = allCourses.filter(course =>
-    //   !selectedCourses.some(selected => selected.id === course.id) && !isConflicting(course)
-    // ).sort((a, b) => {
-    //   const aMatchesDay = a.days.some(day => selectedDays.includes(day));
-    //   const aMatchesCategory = selectedCategories.includes(a.category);
-    //   const bMatchesDay = b.days.some(day => selectedDays.includes(day));
-    //   const bMatchesCategory = selectedCategories.includes(b.category);
-
-    //   const aPriority = (aMatchesDay && aMatchesCategory) ? 3 : aMatchesDay ? 2 : aMatchesCategory ? 1 : 0;
-    //   const bPriority = (bMatchesDay && bMatchesCategory) ? 3 : bMatchesDay ? 2 : bMatchesCategory ? 1 : 0;
-
-    //   return bPriority - aPriority;
-    // });
 
     setRecommendedCourses(sortedRecommendedCourses);
   }, [selectedCourses]);

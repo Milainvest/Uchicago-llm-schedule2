@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from './Header'; // Import Header component
 import Sidebar from './Sidebar'; // Import Sidebar component
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {

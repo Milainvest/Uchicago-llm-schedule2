@@ -15,7 +15,7 @@ const timeSlots = Array.from({ length: 14 }, (_, i) => {
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 
-const timeToPosition = (time) => {
+const timeToPosition = (time: string) => {
   if (!time) {
     console.error("Error: time is undefined or null!", time);
     return 0; // `0` を返してクラッシュを防ぐ
@@ -23,11 +23,10 @@ const timeToPosition = (time) => {
 
   const [hour, minute] = time.split(":").map(Number);
   const timeIndex = (hour - 8) * 60 + minute;
-  console.log("timeIndex", timeIndex);
   return timeIndex;
 }
 
-export default function Calendar({ selectedCourses }) {
+export default function Calendar({ selectedCourses }: { selectedCourses: Course[] }) {
   console.log("Received selectedCourses in Calendar:", selectedCourses);
   return (
     <div className={styles["calendar-container"]} >
@@ -51,10 +50,8 @@ export default function Calendar({ selectedCourses }) {
             {selectedCourses
               .filter((course) => course.days.includes(day))
               .map((course) => {
-                console.log("Rendering course:", course.name, "on", day);
                 const top = timeToPosition(course.timeStart) - timeToPosition("08:00");
                 const height = timeToPosition(course.timeEnd) - timeToPosition(course.timeStart);
-                console.log("Final Position - Course:", course.name, "Top:", top, "Height:", height);
                 return (
                   <div
                     key={course.id}

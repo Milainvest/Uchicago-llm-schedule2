@@ -5,13 +5,14 @@ import { Course } from '@/types/course';
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  className?: string;
   categories: string[];
   professors: string[];
 }
 
 type Credits = 1 | 2 | 3 | 4 | null; // Example, adjust based on your actual type definition
 
-const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, categories, professors = [] }) => {
+const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className, categories, professors = [] }) => {
   const [isVisible, setIsVisible] = useState(false);
   
   // Ensure this hook is called at the top level
@@ -96,7 +97,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, categories, professors = [
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
           lg:translate-x-0 lg:top-16 z-50
-          ${isVisible ? 'visible' : 'invisible'}`}
+          ${isVisible ? 'visible' : 'invisible'} ${className}`}
         aria-label="Filters sidebar"
       >
         <div className="h-full flex flex-col w-72">

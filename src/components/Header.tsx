@@ -1,5 +1,4 @@
-import { FC, useState } from 'react';
-import Sidebar from './Sidebar';
+import { useState } from 'react';
 import { useFilteredState } from '../stores/useFilterStore';
 
 interface HeaderProps {
@@ -7,23 +6,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ toggleSidebar })  => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { hasActiveFilters, activeFilterCount } = useFilteredState();
-
-  // Handler to ensure proper state management
-  const handleToggleSidebar = () => {
-    console.log('Current sidebar state:', isSidebarOpen); // Debug log
-    setIsSidebarOpen(prev => {
-      console.log('New sidebar state:', !prev); // Debug log
-      return !prev;
-    });
-  };
-
-  // Handler to ensure proper closing
-  const handleCloseSidebar = () => {
-    console.log('Closing sidebar'); // Debug log
-    setIsSidebarOpen(false);
-  };
 
   return (
     <header className="bg-maroon-600 fixed top-0 left-0 right-0 z-50 shadow text-white">

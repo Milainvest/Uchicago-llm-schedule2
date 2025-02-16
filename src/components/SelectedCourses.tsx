@@ -60,7 +60,7 @@ const SelectedCourses: React.FC = () => {
                   <p className="text-sm text-gray-500">Credits: {course.credits}</p>
                 </div>
                 <button
-                  onClick={() => removeCourse(course.id)}
+                  onClick={() => removeCourse(course.id.toString())}
                   className="bg-red-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-700 transition duration-200"
                 >
                   Remove

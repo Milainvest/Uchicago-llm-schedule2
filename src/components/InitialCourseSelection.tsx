@@ -1,6 +1,6 @@
 import React from 'react';
-import { useCourseStore } from '../store/useCourseStore';
 import CourseCard from './CourseCard';
+import { Weekday, EvaluationMethod } from '../stores/useFilterStore';
 
 interface Course {
   id: number;
@@ -8,25 +8,19 @@ interface Course {
   description?: string;
   credits: number;
   professor: string;
-  days: string[];
+  days: Weekday[];
   timeStart: string;
   timeEnd: string;
-  evaluationMethod: string;
+  category: string;
+  evaluationMethod: EvaluationMethod;
 }
 
 const initialCourses: Course[] = [
-  { id: 70801, name: "Constitutional Law for LL.M. Students", credits: 3, professor: "Rosenberg, Gerald N", days: ["Monday", "Wednesday", "Thursday"], timeStart: "14:45", timeEnd: "15:50", evaluationMethod: "Exam"},
-  { id: 70850, name: "Contract Law for LL.M. Students", credits: 3, professor: "Bernstein, Lisa", days: ["Tuesday", "Friday"], timeStart: "13:30", timeEnd: "15:15", evaluationMethod: "Paper"},
+  { id: 70801, name: "Constitutional Law for LL.M. Students", credits: 3, professor: "Rosenberg, Gerald N", days: ["Monday", "Wednesday", "Thursday"], timeStart: "14:45", timeEnd: "15:50", category: "NY Bar", evaluationMethod: "Exam"},
+  { id: 70850, name: "Contract Law for LL.M. Students", credits: 3, professor: "Bernstein, Lisa", days: ["Tuesday", "Friday"], timeStart: "13:30", timeEnd: "15:15", category: "NY Bar", evaluationMethod: "Paper"},
 ];
 
 const InitialCourseSelection: React.FC = () => {
-const { addCourse, selectedCourses } = useCourseStore();
-
-const handleSelectCourse = (course: Course) => {
-    if (!selectedCourses.some(c => c.id === course.id)) {
-       addCourse(course);
-    }
-};
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 mb-4">

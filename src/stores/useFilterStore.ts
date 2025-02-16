@@ -36,7 +36,6 @@ interface FilterState {
   setCredits: (credits: Credits) => void;
   setEvaluationMethod: (method: EvaluationMethod) => void;
   resetFilters: () => void;
-  resetSingleFilter: (filterKey: keyof Omit<FilterState, 'hasActiveFilters' | keyof FilterActions>) => void;
   fetchCourses: () => Promise<void>;
 }
 
@@ -49,10 +48,9 @@ type FilterActions = {
   setCredits: FilterState['setCredits'];
   setEvaluationMethod: FilterState['setEvaluationMethod'];
   resetFilters: FilterState['resetFilters'];
-  resetSingleFilter: FilterState['resetSingleFilter'];
 };
 
-const initialState = {
+const initialState: Omit<FilterState, 'hasActiveFilters' | 'setSearchQuery' | 'setCategory' | 'setProfessor' | 'toggleDay' | 'setDays' | 'setCredits' | 'setEvaluationMethod' | 'resetFilters' | 'resetSingleFilter' | 'fetchCourses'> = {
   searchQuery: '',
   category: null,
   professor: null,
@@ -112,11 +110,10 @@ export const useFilterStore = create<FilterState>((set, get) => ({
   setEvaluationMethod: (method) => 
     set({ evaluationMethod: method }),
 
-  resetSingleFilter: (filterKey) =>
-    set({ [filterKey]: initialState[filterKey] }),
-
-  resetFilters: () => 
-    set(initialState),
+  resetFilters: () => {
+    const state = get();
+    set(initialState);
+  },
 
   fetchCourses: async () => {
     try {

@@ -1,7 +1,7 @@
 import { Weekday, EvaluationMethod } from '../stores/useFilterStore';
 
 export interface Course {
-  id: string;
+  id: number;
   name: string;
   professor: string;
   credits: number;
@@ -10,6 +10,6 @@ export interface Course {
   timeEnd: string;
   category: string;
   evaluationMethod: EvaluationMethod;
-  description: string;
+  description?: string;
   isRequired?: boolean;
 }

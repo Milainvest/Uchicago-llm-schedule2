@@ -6,13 +6,12 @@ interface CourseCardProps {
   course: Course;
 }
 
-const CourseCard: FC<CourseCardProps> = ({ course }) => {
+const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
   const { 
     addCourse, 
     removeCourse, 
     isCourseSelected, 
     hasScheduleConflict,
-    selectedCourses,
     totalCredits 
   } = useCourseStore();
   const [isClient, setIsClient] = useState(false);
