@@ -6,20 +6,11 @@ interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
   className?: string;
-<<<<<<< HEAD
-=======
-  categories: string[];
-  professors: string[];
->>>>>>> 4cb8ad1e (Fix errors)
 }
 
 type Credits = 1 | 2 | 3 | 4 | null; // Example, adjust based on your actual type definition
 
-<<<<<<< HEAD
 const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className }) => {
-=======
-const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className, categories, professors = [] }) => {
->>>>>>> 4cb8ad1e (Fix errors)
   const [isVisible, setIsVisible] = useState(false);
   
   // Ensure this hook is called at the top level
