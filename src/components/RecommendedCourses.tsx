@@ -1,7 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useCourseStore } from '../stores/useCourseStore';
 import { Weekday, EvaluationMethod } from '../stores/useFilterStore';
+<<<<<<< HEAD
 import { Course } from '../types/course';
+=======
+
+interface Course {
+  id: number;
+  name: string;
+  description: string;
+  credits: number;
+  professor: string;
+  days: Weekday[];
+  category: string;
+  evaluationMethod: EvaluationMethod;
+  timeStart: string;
+  timeEnd: string;
+}
+>>>>>>> 4cb8ad1e (Fix errors)
 
 import coursesData from '../../public/courses.json';
 
@@ -11,6 +27,11 @@ const allCourses: Course[] = coursesData.map(course => ({
   credits: course.credits,
   professor: course.professor.join(', '),
   days: course.days.map((day: string) => day as Weekday),
+<<<<<<< HEAD
+=======
+  category: course.category,
+  evaluationMethod: course.evaluationMethod,
+>>>>>>> 4cb8ad1e (Fix errors)
   timeStart: course.timeStart,
   timeEnd: course.timeEnd,
   category: course.category,
@@ -64,7 +85,11 @@ const isConflicting = (course: Course) => {
     );
 
             // 1. 曜日とカテゴリーが一致するコース
+<<<<<<< HEAD
             const topPriorityCourses = candidateCourses.filter(course =>
+=======
+            let topPriorityCourses = candidateCourses.filter(course =>
+>>>>>>> 4cb8ad1e (Fix errors)
               !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致
               selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致
@@ -72,14 +97,22 @@ const isConflicting = (course: Course) => {
           );
   
           // 2. 曜日のみ一致するコース
+<<<<<<< HEAD
           const dayMatchCourses = candidateCourses.filter(course =>
+=======
+          let dayMatchCourses = candidateCourses.filter(course =>
+>>>>>>> 4cb8ad1e (Fix errors)
               !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致
               !selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致 
               !isConflicting(course) // 選択されているコースと重複しない
           );
           // 3. カテゴリーのみ一致するコース
+<<<<<<< HEAD
           const categoryMatchCourses = candidateCourses.filter(course =>
+=======
+          let categoryMatchCourses = candidateCourses.filter(course =>
+>>>>>>> 4cb8ad1e (Fix errors)
               !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
               !course.days.some(day => selectedDays.has(day)) && // 選択されているコースの曜日と一致しない
               selectedCategories.has(course.category) && // 選択されているコースのカテゴリーと一致 

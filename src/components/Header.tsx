@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+import { useState } from 'react';
+import { useFilteredState } from '../stores/useFilterStore';
+
+>>>>>>> 4cb8ad1e (Fix errors)
 interface HeaderProps {
   toggleSidebar: () => void;
 }
