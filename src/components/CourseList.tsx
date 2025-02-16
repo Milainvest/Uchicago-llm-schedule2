@@ -16,7 +16,7 @@ const allCourses: Course[] = coursesData.map(course => ({
   category: course.category,
   evaluationMethod: course.evaluationMethod as EvaluationMethod,
   description: course.description || '',
-  isRequired: course.isRequired,
+  isRequired: course.isRequired === 'Y' ? true : false,
 }));
 
 const CourseList: FC = () => {
