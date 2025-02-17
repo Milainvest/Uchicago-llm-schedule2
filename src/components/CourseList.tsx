@@ -9,7 +9,7 @@ const allCourses: Course[] = coursesData.map(course => ({
   id: course.id,
   name: course.name,
   credits: course.credits,
-  professor: course.professor.join(', '),
+  professor: course.professor.join(','),
   days: course.days.map((day: string) => day as Weekday),
   timeStart: course.timeStart,
   timeEnd: course.timeEnd,
