@@ -100,7 +100,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className }) => {
           ${isVisible ? 'visible' : 'invisible'} ${className}`}
         aria-label="Filters sidebar"
       >
-        <div className="flex flex-col w-72">
+        <div className="flex flex-col mt-4">
           {/* Header */}
           <div className="flex-none px-4 py-4 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
             <div className="flex justify-between items-center">

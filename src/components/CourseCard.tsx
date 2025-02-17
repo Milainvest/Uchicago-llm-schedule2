@@ -76,8 +76,6 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
   if (!isClient) {
     return <div>Loading...</div>; // Prevent rendering until client-side
   }
-  
-  console.log("biddable", course.biddable);
 
   return (
     <div 
