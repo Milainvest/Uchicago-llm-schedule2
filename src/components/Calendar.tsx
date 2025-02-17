@@ -24,7 +24,6 @@ const timeToPosition = (time: string) => {
 }
 
 export default function Calendar({ selectedCourses }: { selectedCourses: Course[] }) {
-  console.log("Received selectedCourses in Calendar:", selectedCourses);
   return (
     <div className={styles["calendar-container"]} >
         {/* 曜日ヘッダーを追加 */}
@@ -37,7 +36,6 @@ export default function Calendar({ selectedCourses }: { selectedCourses: Course[
       <div className={styles["calendar-body"]}>
       <div className={styles["time-column"]}>
         {timeSlots.map((time) => (
-          console.log("time", time),
           <div key={time} className={styles["time-slot"]}>{time}</div>
         ))}
       </div>

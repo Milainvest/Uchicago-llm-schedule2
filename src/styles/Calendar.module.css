@@ -46,6 +46,7 @@
   height: 60px; /* 1時間ごとに1スロット */
   display: flex;
   justify-content: center;
+  color: #000;
 }
 
 /* 曜日ごとのカラム */

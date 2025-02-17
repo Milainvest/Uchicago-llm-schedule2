@@ -64,11 +64,13 @@ const CourseList: FC = () => {
 
   // Filter courses based on the current filters
   const filteredCourses = displayedCourses.filter(course => {
+    console.log("course.professor: ", course.professor);
     const matchesSearch = searchQuery ? course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (typeof course.professor === 'string' && course.professor.toLowerCase().includes(searchQuery.toLowerCase())) : true;
     
     const matchesCategory = !category || course.category === category;
     const matchesProfessor = !professor || course.professor === professor;
+    console.log("matchesProfessor: ", matchesProfessor, "course.professor: ", course.professor, "professor: ", professor);
     const matchesCredits = !credits || course.credits === credits;
     const matchesEvaluation = !evaluationMethod || course.evaluationMethod === evaluationMethod;
     const matchesDays = selectedDays.length === 0 || 

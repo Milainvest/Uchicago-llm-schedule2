@@ -47,7 +47,7 @@ const SelectedCourses: React.FC = () => {
             </div>
                 {/* カレンダー表示 */}
                 <div className="mt-6 p-4 border rounded bg-gray-100">
-                <h2 className="p-4 text-lg font-bold text-center">Your Weekly Schedule</h2>
+                <h2 className="p-4 text-lg font-bold text-center text-black">Your Weekly Schedule</h2>
                 {/* ここで `selectedCourses` を `Calendar` に渡す */}
                 <Calendar selectedCourses={selectedCourses} />
                 {/* <table className="w-full border-collapse border border-gray-300 mt-4">
