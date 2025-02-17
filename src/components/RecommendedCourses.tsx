@@ -10,7 +10,7 @@ const allCourses: Course[] = coursesData.map(course => ({
   name: course.name,
   credits: course.credits,
   professor: course.professor.join(', '),
-  days: course.days.map((day: string) => day as Weekday),
+  days: course.days.map(day => day as Weekday),
   timeStart: course.timeStart,
   timeEnd: course.timeEnd,
   category: course.category,
@@ -30,7 +30,7 @@ const RecommendedCourses: React.FC = () => {
 
 // 選択されているコースと重複しないかどうかを確認
 const isConflicting = (course: Course) => {
-  return selectedCourses.some((selected: any) => 
+  return selectedCourses.some((selected: Course) => 
     !selectedCourses.some(c => c.id === course.id) && // 選択されていないコース
      (selected.days || []).some((day: string) => (course.days || []).some((d: Weekday) => d === day)) && // 選択されているコースの曜日と一致  
      ((course.timeStart < selected.timeEnd && course.timeEnd > selected.timeStart) || // 選択されているコースの時間と重複
@@ -56,7 +56,7 @@ const isConflicting = (course: Course) => {
 
     const candidateCourses = allCourses.filter(course => 
       !selectedCourses.some(selected => selected.id === course.id) && // 選択されていないコース
-      (course.days || []).some((day: string) => (selectedCourses.flatMap((c: any) => c.days) || []).includes(day)) || selectedCategories.has(course.category) && // 選択されているコースの曜日またはカテゴリーと一致 
+      (course.days || []).some((day: Weekday) => (selectedCourses.flatMap((c: Course) => c.days) || []).includes(day)) || selectedCategories.has(course.category) && // 選択されているコースの曜日またはカテゴリーと一致 
       !selectedTimes.some((selectedTime: any) => 
         course.days.some(day => selectedTime.days.includes(day)) && // 選択されているコースの曜日と一致
         isTimeOverlap(selectedTime.start, selectedTime.end, course.timeStart, course.timeEnd) // 選択されているコースの時間と重複しない   
@@ -110,8 +110,8 @@ const isConflicting = (course: Course) => {
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Recommended Courses</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {recommendedCourses.slice(0, visibleCourses).map(course => {
-          const matchesDay = course.days.some(day => selectedCourses.flatMap((c: any) => c.days).includes(day));
-          const matchesCategory = selectedCourses.map((c: any) => c.category).includes(course.category);
+          const matchesDay = course.days.some(day => selectedCourses.flatMap((c: Course) => c.days).includes(day));
+          const matchesCategory = selectedCourses.map((c: Course) => c.category).includes(course.category);
           const priority = (matchesDay && matchesCategory) ? 3 : matchesDay ? 2 : matchesCategory ? 1 : 0;
 
           return (
