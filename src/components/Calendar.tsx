@@ -1,12 +1,9 @@
 import React from "react";
 import styles from "../styles/Calendar.module.css"; // CSS Modules をインポート
+import { Course } from "../types/course";
+import { Weekday } from "../stores/useFilterStore";
 
 // 時間スロットを生成、8時から21時まで
-// const timeSlots = Array.from({ length: 14 * 2 + 1 }, (_, i) => {
-//   const hour = Math.floor((8 * 60 + i * 30) / 60);
-//   const minute = (8 * 60 + i * 30) % 60;
-//   return `${hour}:${minute.toString().padStart(2, "0")}`;
-// });
 const timeSlots = Array.from({ length: 14 }, (_, i) => {
   const hour = 8 + i;
   return `${hour}:00`;
@@ -48,7 +45,7 @@ export default function Calendar({ selectedCourses }: { selectedCourses: Course[
         {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"].map((day) => (
           <div key={day} className={styles["day-column"]}>
             {selectedCourses
-              .filter((course) => course.days.includes(day))
+              .filter((course) => course.days.includes(day as Weekday))
               .map((course) => {
                 const top = timeToPosition(course.timeStart) - timeToPosition("08:00");
                 const height = timeToPosition(course.timeEnd) - timeToPosition(course.timeStart);

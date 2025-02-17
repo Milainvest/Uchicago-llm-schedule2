@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import Head from 'next/head';
-import Header from '../components/Header';
 import CourseList from '../components/CourseList';
 import InitialCourseSelection from '../components/InitialCourseSelection';
 import SelectedCourses from '../components/SelectedCourses';
