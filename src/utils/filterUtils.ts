@@ -13,5 +13,6 @@ export const allCourses: Course[] = coursesData.map(course => ({
   category: course.category,
   evaluationMethod: course.evaluationMethod as EvaluationMethod,
   description: course.description || '',
+  biddable: course.Biddable,
   isRequired: course.isRequired === 'Y' ? true : false,
 }));

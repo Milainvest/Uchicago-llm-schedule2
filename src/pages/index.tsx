@@ -54,8 +54,8 @@ const HomePage: React.FC = () => {
                       Quick Tips
                     </h2>
                     <ul className="space-y-2 text-gray-600">
-                      <li>• Search for courses by name or professor</li>
-                      <li>• Filter by evaluation method (exam/paper)</li>
+                      <li>• Biddable courses have a * next to the title.</li>
+                      <li>• Filter by title, professor, category, day, etc.</li>
                       <li>• Check credit requirements</li>
                       <li>• Save your schedule for later</li>
                     </ul>

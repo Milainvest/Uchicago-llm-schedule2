@@ -76,6 +76,8 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
   if (!isClient) {
     return <div>Loading...</div>; // Prevent rendering until client-side
   }
+  
+  console.log("biddable", course.biddable);
 
   return (
     <div 
@@ -93,7 +95,7 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-xl font-semibold text-gray-900 flex items-center">
             {course.name}
-            {course.isRequired && (
+            {course.biddable === "Y" && (
               <span className="ml-2 text-maroon-600" title="Required Course">
                 *
               </span>

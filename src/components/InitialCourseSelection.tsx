@@ -1,19 +1,6 @@
 import React from 'react';
 import CourseCard from './CourseCard';
-import { Weekday, EvaluationMethod } from '../stores/useFilterStore';
-
-interface Course {
-  id: number;
-  name: string;
-  description?: string;
-  credits: number;
-  professor: string;
-  days: Weekday[];
-  timeStart: string;
-  timeEnd: string;
-  category: string;
-  evaluationMethod: EvaluationMethod;
-}
+import { Course } from '../types/course';
 
 const initialCourses: Course[] = [
   { 
@@ -26,6 +13,7 @@ const initialCourses: Course[] = [
     timeEnd: "15:50", 
     category: "NY Bar", 
     evaluationMethod: "Exam",
+    biddable: "N",
     description: "This course is designed for LL.M. students who are interested in Constitutional Law. You may need to take this course if you will take the NY Bar Exam."
   },
   { 
@@ -38,6 +26,7 @@ const initialCourses: Course[] = [
     timeEnd: "15:15", 
     category: "NY Bar", 
     evaluationMethod: "Paper",
+    biddable: "N",
     description: "This course is designed for LL.M. students who are interested in Contract Law. You may need to take this course if you will take the NY Bar Exam."
   },
 ];
