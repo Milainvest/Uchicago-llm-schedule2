@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import { useFilterStore, Weekday, EvaluationMethod } from '../stores/useFilterStore';
-import { Course } from '@/types/course';
 
 interface SidebarProps {
   isOpen: boolean;

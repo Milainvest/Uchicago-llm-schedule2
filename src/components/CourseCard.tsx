@@ -24,15 +24,15 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
 
   useEffect(() => {
     if (isClient) {
-      const isSelected = isCourseSelected(course.id);
+      const isSelected = isCourseSelected(course.id.toString());
       setWouldConflict(!isSelected && hasScheduleConflict(course));
       setWouldExceedCredits(!isSelected && (totalCredits + course.credits) > 15);
     }
   }, [isClient, course, totalCredits, isCourseSelected, hasScheduleConflict]);
 
   const handleToggleCourse = () => {
-    if (isCourseSelected(course.id)) {
-      removeCourse(course.id);
+    if (isCourseSelected(course.id.toString())) {
+      removeCourse(course.id.toString());
     } else {
       if (wouldExceedCredits) {
         alert('Adding this course would exceed the maximum credit limit of 15.');
@@ -49,7 +49,7 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
   return (
     <div 
       className={`bg-white rounded-lg shadow-sm border transition-all duration-200
-        ${isCourseSelected(course.id) 
+        ${isCourseSelected(course.id.toString()) 
           ? 'border-maroon-600 shadow-md ring-1 ring-maroon-600/10' 
           : wouldConflict
             ? 'border-yellow-300 hover:shadow-md'
@@ -99,7 +99,7 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
               {course.timeStart} - {course.timeEnd}
             </div> */}
             <div className="flex items-center">
-              {isCourseSelected(course.id) && (
+              {isCourseSelected(course.id.toString()) && (
                 <span className="text-maroon-600 mr-3 flex items-center">
                   <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -121,11 +121,11 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
           </div>
 
           <button
-            onClick={() => {handleToggleCourse; isCourseSelected(course.id) ? removeCourse(course.id) : addCourse(course)}}
+            onClick={handleToggleCourse}
             disabled={wouldConflict || wouldExceedCredits}
             className={`w-full px-4 py-2 rounded-md transition-all duration-200 text-sm font-medium
               focus:outline-none focus:ring-2 focus:ring-offset-2
-              ${isCourseSelected(course.id)
+              ${isCourseSelected(course.id.toString())
                 ? 'bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500'
                 : wouldConflict
                   ? 'bg-yellow-100 text-yellow-700 cursor-not-allowed'
@@ -134,7 +134,7 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
                     : 'bg-maroon-600 text-white hover:bg-maroon-700 focus:ring-maroon-600'
               }`}
           >
-            {isCourseSelected(course.id) ? 'Remove from Schedule' : 'Add to Schedule'}
+            {isCourseSelected(course.id.toString()) ? 'Remove from Schedule' : 'Add to Schedule'}
           </button>
         </div>
       </div>
