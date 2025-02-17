@@ -89,7 +89,7 @@ const isConflicting = (course: Course) => {
           const sortedRecommendedCourses = [...topPriorityCourses, ...categoryMatchCourses, ...dayMatchCourses];
 
     setRecommendedCourses(sortedRecommendedCourses);
-  }, [selectedCourses, isConflicting, isTimeOverlap]);
+  }, [selectedCourses, isConflicting]);
 
   const handleAddCourse = (course: Course) => {
     if (!selectedCourses.some(c => c.id === course.id)) {
