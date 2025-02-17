@@ -37,7 +37,6 @@ const CourseList: FC = () => {
     };
 
     fetchCourses();
-    console.log("Category has changed:", category);
   }, [category]);
 
   if (loading) {
