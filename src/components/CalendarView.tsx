@@ -2,8 +2,9 @@ import React from 'react';
 import { useCourseStore } from '../stores/useCourseStore';
 import Calendar from './Calendar';
 
+const { selectedCourses, totalCredits } = useCourseStore();
+
 const SelectedCourses: React.FC = () => {
-  const { selectedCourses, totalCredits } = useCourseStore();
 
       // 時間スロット（30分単位）
       const timeSlots = [];

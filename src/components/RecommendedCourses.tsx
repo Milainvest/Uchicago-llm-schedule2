@@ -44,7 +44,7 @@ const isConflicting = (course: Course) => {
     const selectedTimes = selectedCourses.map(selectedcourse => {
       const course = allCourses.find(c => c.id === selectedcourse.id);
       return course ? { days: course.days, start: course.timeStart, end: course.timeEnd } : null;
-    }).filter(Boolean);
+    }).filter((time): time is { days: Weekday[]; start: string; end: string } => time !== null);
 
     selectedCourses.forEach(selectedcourse => {
       const course = allCourses.find(c => c.id === selectedcourse.id); // 選択されているコース  
@@ -57,7 +57,7 @@ const isConflicting = (course: Course) => {
     const candidateCourses = allCourses.filter(course => 
       !selectedCourses.some(selected => selected.id === course.id) && // 選択されていないコース
       (course.days || []).some((day: Weekday) => (selectedCourses.flatMap((c: Course) => c.days) || []).includes(day)) || selectedCategories.has(course.category) && // 選択されているコースの曜日またはカテゴリーと一致 
-      !selectedTimes.some((selectedTime: any) => 
+      !selectedTimes.some((selectedTime) => 
         course.days.some(day => selectedTime.days.includes(day)) && // 選択されているコースの曜日と一致
         isTimeOverlap(selectedTime.start, selectedTime.end, course.timeStart, course.timeEnd) // 選択されているコースの時間と重複しない   
       ) 
@@ -89,7 +89,7 @@ const isConflicting = (course: Course) => {
           const sortedRecommendedCourses = [...topPriorityCourses, ...categoryMatchCourses, ...dayMatchCourses];
 
     setRecommendedCourses(sortedRecommendedCourses);
-  }, [selectedCourses]);
+  }, [selectedCourses, isConflicting, isTimeOverlap]);
 
   const handleAddCourse = (course: Course) => {
     if (!selectedCourses.some(c => c.id === course.id)) {
