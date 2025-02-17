@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../components/Layout';
+import Layout from '@/components/Layout';
 import Head from 'next/head';
 import CourseList from '../components/CourseList';
 import InitialCourseSelection from '../components/InitialCourseSelection';
