@@ -11,5 +11,6 @@ export interface Course {
   category: string;
   evaluationMethod: EvaluationMethod;
   description?: string;
+  biddable: string;
   isRequired?: boolean;
 }
