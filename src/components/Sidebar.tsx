@@ -37,7 +37,12 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className }) => {
   }, [fetchCourses]);
   
   const uniqueCategories = Array.from(new Set(courses.map(course => course.category)));
-  const uniqueProfessors = Array.from(new Set(courses.map(course => course.professor)));
+  const uniqueProfessors = Array.from(
+    new Set(courses.map(course => course.professor))
+  ).map(professor => {
+    const course = courses.find(course => course.professor === professor);
+    return { id: course?.id, professor };
+  });
   
 
   // Update visibility based on isOpen
@@ -95,7 +100,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className }) => {
           ${isVisible ? 'visible' : 'invisible'} ${className}`}
         aria-label="Filters sidebar"
       >
-        <div className="h-full flex flex-col w-72">
+        <div className="flex flex-col w-72">
           {/* Header */}
           <div className="flex-none px-4 py-4 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
             <div className="flex justify-between items-center">
@@ -196,8 +201,8 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, className }) => {
                 >
                   <option value="">All Professors</option>
                   {uniqueProfessors.map((prof) => (
-                    <option key={prof} value={prof}>
-                      {prof}
+                    <option key={prof.id} value={prof.professor}>
+                      {prof.professor}
                     </option>
                   ))}
                 </select>

@@ -3,21 +3,7 @@ import { useFilterStore, EvaluationMethod, Weekday } from '../stores/useFilterSt
 import { useCourseStore } from '../stores/useCourseStore';
 import { Course } from '../types/course';
 import CourseCard from './CourseCard';
-import coursesData from '../../public/courses.json';
-
-const allCourses: Course[] = coursesData.map(course => ({
-  id: course.id,
-  name: course.name,
-  credits: course.credits,
-  professor: course.professor.join(','),
-  days: course.days.map((day: string) => day as Weekday),
-  timeStart: course.timeStart,
-  timeEnd: course.timeEnd,
-  category: course.category,
-  evaluationMethod: course.evaluationMethod as EvaluationMethod,
-  description: course.description || '',
-  isRequired: course.isRequired === 'Y' ? true : false,
-}));
+import { allCourses } from '../utils/filterUtils';
 
 const CourseList: FC = () => {
   const { totalCredits, selectedCourses } = useCourseStore();
@@ -51,26 +37,24 @@ const CourseList: FC = () => {
     };
 
     fetchCourses();
-  }, []);
+    console.log("Category has changed:", category);
+  }, [category]);
 
   if (loading) {
     return <div>Loading courses...</div>;
   }
 
   if (!Array.isArray(courses)) {
-    console.error('Courses is not an array:', courses);
     return <div>Error: Courses data is not available.</div>;
   }
 
   // Filter courses based on the current filters
   const filteredCourses = displayedCourses.filter(course => {
-    console.log("course.professor: ", course.professor);
     const matchesSearch = searchQuery ? course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (typeof course.professor === 'string' && course.professor.toLowerCase().includes(searchQuery.toLowerCase())) : true;
     
     const matchesCategory = !category || course.category === category;
     const matchesProfessor = !professor || course.professor === professor;
-    console.log("matchesProfessor: ", matchesProfessor, "course.professor: ", course.professor, "professor: ", professor);
     const matchesCredits = !credits || course.credits === credits;
     const matchesEvaluation = !evaluationMethod || course.evaluationMethod === evaluationMethod;
     const matchesDays = selectedDays.length === 0 || 

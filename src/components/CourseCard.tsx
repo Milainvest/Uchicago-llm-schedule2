@@ -1,7 +1,8 @@
+import React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { useCourseStore } from '../stores/useCourseStore';
 import { Course } from '../types/course';
-
+import { allCourses } from '../utils/filterUtils';
 interface CourseCardProps {
   course: Course;
 }
@@ -17,6 +18,8 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
   const [isClient, setIsClient] = useState(false);
   const [wouldConflict, setWouldConflict] = useState(false);
   const [wouldExceedCredits, setWouldExceedCredits] = useState(false);
+  const [conflictMessage, setConflictMessage] = useState(""); // 競合エラーメッセージ
+  const { selectedCourses } = useCourseStore(); // 選択されたコースのID
 
   useEffect(() => {
     setIsClient(true);
@@ -30,6 +33,34 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
     }
   }, [isClient, course, totalCredits, isCourseSelected, hasScheduleConflict]);
 
+  // 時間を比較し、重なっているかを判定
+  const isTimeOverlap = (start1: string, end1: string, start2: string, end2: string) => {
+      return !(end1 <= start2 || end2 <= start1);
+  };
+
+  // コースの選択・競合チェック
+  const toggleCourseSelection = (course: Course) => {
+      const courseToAdd = allCourses.find(c => c.id === course.id);
+      if (!courseToAdd) return;
+
+       // 選択済みのコースと時間が重なるかチェック
+      const hasConflict = selectedCourses.some(selectedId => {
+          const selectedCourse = allCourses.find(c => c.id === selectedId.id);
+          return selectedCourse?.days.some(day =>
+              courseToAdd.days.includes(day) &&
+              isTimeOverlap(selectedCourse.timeStart, selectedCourse.timeEnd, courseToAdd.timeStart, courseToAdd.timeEnd)
+          );
+      });
+
+      if (hasConflict) {
+          setConflictMessage(`⚠️ Conflict detected: ${courseToAdd.name} overlaps with another selected course.`);
+          return; // 競合がある場合は追加しない
+      }
+
+      addCourse(course);
+      setConflictMessage(""); // エラーメッセージをクリア
+    };
+
   const handleToggleCourse = () => {
     if (isCourseSelected(course.id.toString())) {
       removeCourse(course.id.toString());
@@ -38,7 +69,7 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
         alert('Adding this course would exceed the maximum credit limit of 15.');
         return;
       }
-      addCourse(course);
+      toggleCourseSelection(course);
     }
   };
 
@@ -115,6 +146,11 @@ const CourseCard: FC<CourseCardProps> = ({ course : course }) => {
               {wouldExceedCredits && (
                 <span className="text-red-600 mr-3">
                   Exceeds Credit Limit
+                </span>
+              )}
+              {conflictMessage && (
+                <span className="text-red-600 mr-3">
+                  {conflictMessage}
                 </span>
               )}
             </div>
