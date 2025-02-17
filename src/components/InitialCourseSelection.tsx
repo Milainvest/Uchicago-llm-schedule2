@@ -16,8 +16,30 @@ interface Course {
 }
 
 const initialCourses: Course[] = [
-  { id: 70801, name: "Constitutional Law for LL.M. Students", credits: 3, professor: "Rosenberg, Gerald N", days: ["Monday", "Wednesday", "Thursday"], timeStart: "14:45", timeEnd: "15:50", category: "NY Bar", evaluationMethod: "Exam"},
-  { id: 70850, name: "Contract Law for LL.M. Students", credits: 3, professor: "Bernstein, Lisa", days: ["Tuesday", "Friday"], timeStart: "13:30", timeEnd: "15:15", category: "NY Bar", evaluationMethod: "Paper"},
+  { 
+    id: 70801, 
+    name: "Constitutional Law for LL.M. Students", 
+    credits: 3, 
+    professor: "Rosenberg, Gerald N", 
+    days: ["Monday", "Wednesday", "Thursday"], 
+    timeStart: "14:45", 
+    timeEnd: "15:50", 
+    category: "NY Bar", 
+    evaluationMethod: "Exam",
+    description: "This course is designed for LL.M. students who are interested in Constitutional Law. You may need to take this course if you will take the NY Bar Exam."
+  },
+  { 
+    id: 70850, 
+    name: "Contract Law for LL.M. Students", 
+    credits: 3, 
+    professor: "Bernstein, Lisa", 
+    days: ["Tuesday", "Friday"], 
+    timeStart: "13:30", 
+    timeEnd: "15:15", 
+    category: "NY Bar", 
+    evaluationMethod: "Paper",
+    description: "This course is designed for LL.M. students who are interested in Contract Law. You may need to take this course if you will take the NY Bar Exam."
+  },
 ];
 
 const InitialCourseSelection: React.FC = () => {
